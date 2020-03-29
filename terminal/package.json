@@ -1,0 +1,7 @@
+{
+  "name": "terminal",
+  "private": true,
+  "source": "index.js",
+  "main": "../dist/terminal.js",
+  "types": "../dist/types/terminal/index.d.ts"
+}
