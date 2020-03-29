@@ -148,10 +148,12 @@ export class Buffer {
    * @param {Buffer} buffer
    * @param {number} [x]
    * @param {number} [y]
+   * @param {number} [w]
+   * @param {number} [h]
    */
-  blit(buffer, x = 0, y = 0) {
-    for (let i = 0; i < buffer.width; i++) {
-      for (let j = 0; j < buffer.height; j++) {
+  blit(buffer, x = 0, y = 0, w = buffer.width, h = buffer.height, layer = 0) {
+    for (let i = 0; i < w; i++) {
+      for (let j = 0; j < h; j++) {
         let index = i + j * buffer.width;
 
         this.put(
@@ -160,7 +162,7 @@ export class Buffer {
           buffer.chars[index],
           buffer.foreground[index],
           buffer.background[index],
-          buffer.layers[index],
+          buffer.layers[index] + layer,
         );
       }
     }
@@ -539,6 +541,22 @@ export class Terminal {
    */
   put(x, y, char, fg, bg, layer = 0) {
     this.backBuffer.put(x, y, char, fg, bg, layer);
+  }
+
+  /**
+   * Copy the contents of another buffer to this terminal.
+   *
+   * See [[Buffer.blit]]
+   *
+   * @param {Buffer} buffer
+   * @param {number} [x]
+   * @param {number} [y]
+   * @param {number} [w]
+   * @param {number} [h]
+   * @param {number} [layer]
+   */
+  blit(buffer, x, y, w, h, layer) {
+    this.backBuffer.blit(buffer, x, y, w, h, layer);
   }
 
   /**
