@@ -1,0 +1,7 @@
+{
+  "name": "color",
+  "private": true,
+  "source": "index.js",
+  "main": "../dist/color.js",
+  "types": "../dist/types/color/index.d.ts"
+}
