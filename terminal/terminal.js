@@ -403,6 +403,11 @@ export class Terminal {
         }
 
         let char = backBuffer.chars[i];
+
+        if (font.mapping && char in font.mapping) {
+          char = font.mapping[char];
+        }
+
         let fg = backBuffer.foreground[i];
         let bg = backBuffer.background[i];
         let textureX = char % font.columns;

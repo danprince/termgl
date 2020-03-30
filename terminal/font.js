@@ -1,3 +1,5 @@
+import CP437 from "./cp437.js";
+
 export class Font {
   static get default() {
     return new Font({
@@ -17,6 +19,7 @@ export class Font {
    * @param {number} [settings.rows] The number of rows in the font's image
    * @param {boolean} [settings.graphical] Specify whether the font is already colored
    * @param {number} [settings.transparentColor] Transparency key for the font image in numeric RGBA format
+   * @param {object} [settings.mapping] The codepage mapping for this font
    */
   constructor({
     url,
@@ -24,6 +27,7 @@ export class Font {
     rows = 16,
     graphical = false,
     transparentColor = 0x00000000,
+    mapping = CP437,
   }) {
     /**
      * @readonly
@@ -60,6 +64,11 @@ export class Font {
      * @readonly
      */
     this.transparentColor = transparentColor;
+
+    /**
+     * @readonly
+     */
+    this.mapping = mapping;
   }
 
   /**
