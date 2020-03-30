@@ -95,7 +95,7 @@ export class Font {
  * A buffer is the raw representation of the contents of a terminal.
  * The terminal will create buffers for you, but it's also possible
  * to create your own and draw to them separately before copying
- * them into the terminal. See [[Buffer#blit]].
+ * them into the terminal. See [[Buffer.blit]].
  */
 export class Buffer {
   /**
@@ -294,7 +294,7 @@ export class Terminal {
 
     /**
      * An editable buffer that the terminal writes to when you call
-     * [[this.put]].
+     * [[Terminal.put]].
      *
      * @private
      * @type {Buffer}
@@ -449,7 +449,7 @@ export class Terminal {
     this.backgroundColors = new Uint8ClampedArray(vertexCount * 4);
 
     /**
-     * A DataView into [[this.foregroundColors]]. Allows us to write
+     * A DataView into [[Terminal.foregroundColors]]. Allows us to write
      * 32 bit RGBA colors directly without having to extract the
      * components.
      *
@@ -459,7 +459,7 @@ export class Terminal {
     this.foregroundColorsView = new DataView(this.foregroundColors.buffer);
 
     /**
-     * A DataView into [[this.backgroundColors]]. Allows us to write
+     * A DataView into [[Terminal.backgroundColors]]. Allows us to write
      * 32 bit RGBA colors directly without having to extract the
      * components.
      *
@@ -522,7 +522,9 @@ export class Terminal {
   }
 
   /**
-   * Set the contents and colors for the cell at x, y. See [[Buffer.put]]
+   * Set the contents and colors for the cell at x, y.
+   *
+   * See [[Buffer.put]]
    *
    * @param {number} x
    * @param {number} y
