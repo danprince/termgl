@@ -4,9 +4,23 @@
     "allowJs": true,
     "checkJs": true,
     "declaration": true,
-    "declarationDir": "dist/types"
+    "declarationDir": "dist/types",
+    "noEmit": true
   },
   "include": [
-    "terminal"
-  ]
+    "terminal",
+    "color"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "typedocOptions": {
+    "mode": "modules",
+    "out": "docs",
+    "excludeNotExported": true,
+    "inputFiles": [
+      "terminal/index.js",
+      "color/index.js"
+    ]
+  }
 }

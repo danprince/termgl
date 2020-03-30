@@ -1,3 +1,10 @@
+/**
+ * Here is some info about the terminal package.
+ *
+ * @packageDocumentation
+ * @module termgl
+ */
+
 export class Font {
   static get default() {
     return new Font({

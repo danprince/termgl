@@ -1,4 +1,11 @@
 /**
+ * Here is some info about the color package.
+ *
+ * @packageDocumentation
+ * @module termgl/color
+ */
+
+/**
  * Create a numeric RGBA color from individual byte components.
  *
  * @param {number} r Red component (0-255)
