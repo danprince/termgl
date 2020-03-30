@@ -78,15 +78,16 @@ export class Font {
 
   /**
    * A helper for ensuring that the font's image has loaded.
-   *
-   * @param {() => any} callback
    */
-  onLoad(callback) {
-    if (this.image.naturalWidth > 0) {
-      callback();
-    } else {
-      this.image.addEventListener("load", () => callback());
-    }
+  onLoad() {
+    return new Promise((resolve, reject) => {
+      if (this.image.naturalWidth > 0) {
+        resolve();
+      } else {
+        this.image.addEventListener("load", () => resolve());
+        this.image.addEventListener("error", (err) => reject(err))
+      }
+    });
   }
 }
 
@@ -476,18 +477,9 @@ export class Terminal {
    *
    * @param {Font} font
    */
-  setFont(font) {
-    font.onLoad(() => this.loadFont(font));
-  }
+  async setFont(font) {
+    await font.onLoad();
 
-  /**
-   * Internal method that can be used to set the current font (once the
-   * font has been loaded). Prefer [[this.setFont]].
-   *
-   * @private
-   * @param {Font} font
-   */
-  loadFont(font) {
     let { gl, canvas, uniforms } = this;
 
     this.font = font;
