@@ -144,7 +144,8 @@ export class Terminal {
      * @type {WebGLRenderingContext}
      */
     this.gl = this.canvas.getContext("webgl", {
-      preserveDrawingBuffer: true
+      preserveDrawingBuffer: true,
+      premultipliedAlpha: false,
     });
 
     let gl = this.gl;
