@@ -482,6 +482,13 @@ export class Terminal {
 
     this.frontBuffer = backBuffer;
     this.backBuffer = frontBuffer;
+    this.clearDrawingBuffer();
+  }
+
+  /**
+   * Reset the contents of the buffer we're currently drawing to.
+   */
+  clearDrawingBuffer() {
     this.backBuffer.clear();
   }
 
