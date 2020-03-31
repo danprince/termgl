@@ -37,10 +37,16 @@ export class Buffer {
     if (x >= 0 && y >= 0 && x < this.width && y < this.height) {
       if (layer >= this.layers[index]) {
         this.layers[index] = layer;
-        this.chars[index] = code;
-        this.foreground[index] = fg;
 
-        if (bg) {
+        if (fg != null) {
+          this.foreground[index] = fg;
+        }
+
+        if (code != null) {
+          this.chars[index] = code;
+        }
+
+        if (bg != null) {
           this.background[index] = bg;
         }
       }
