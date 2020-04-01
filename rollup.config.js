@@ -5,6 +5,7 @@ import size from "rollup-plugin-bundle-size";
 let modules = [
   require("./terminal/package.json"),
   require("./color/package.json"),
+  require("./ui/package.json"),
 ];
 
 export default modules.map(pkg => {

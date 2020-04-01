@@ -1,0 +1,7 @@
+{
+  "name": "ui",
+  "private": true,
+  "source": "index.js",
+  "main": "../dist/ui.js",
+  "types": "../dist/types/ui/index.d.ts"
+}

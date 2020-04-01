@@ -8,6 +8,7 @@
   },
   "include": [
     "terminal",
-    "color"
+    "color",
+    "ui"
   ]
 }

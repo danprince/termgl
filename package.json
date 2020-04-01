@@ -20,6 +20,7 @@
   "files": [
     "terminal",
     "color",
+    "ui",
     "dist"
   ],
   "devDependencies": {
