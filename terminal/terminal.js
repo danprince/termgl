@@ -111,7 +111,7 @@ export class Terminal {
      * @private
      * @type {Buffer}
      */
-    this.frontBuffer = new Buffer(width, height);
+    this.screenBuffer = new Buffer(width, height);
 
     /**
      * An editable buffer that the terminal writes to when you call
@@ -120,7 +120,7 @@ export class Terminal {
      * @private
      * @type {Buffer}
      */
-    this.backBuffer = new Buffer(width, height);
+    this.drawingBuffer = new Buffer(width, height);
 
     /**
      * The canvas element the terminal will render to.
@@ -339,8 +339,8 @@ export class Terminal {
       );
     }
 
-    // Clear the front buffer to force a full redraw next time we render
-    this.frontBuffer.clear();
+    // Clear the screen buffer to force a full redraw next time we render
+    this.screenBuffer.clear();
   }
 
   /**
@@ -356,7 +356,7 @@ export class Terminal {
    * @param {number} [layer]
    */
   put(x, y, char, fg, bg, layer = 0) {
-    this.backBuffer.put(x, y, char, fg, bg, layer);
+    this.drawingBuffer.put(x, y, char, fg, bg, layer);
   }
 
   /**
@@ -372,14 +372,14 @@ export class Terminal {
    * @param {number} [layer]
    */
   blit(buffer, x, y, w, h, layer) {
-    this.backBuffer.blit(buffer, x, y, w, h, layer);
+    this.drawingBuffer.blit(buffer, x, y, w, h, layer);
   }
 
   /**
    * Render the contents of the terminal to the canvas.
    */
   render() {
-    let { font, frontBuffer, backBuffer } = this;
+    let { font, screenBuffer, drawingBuffer } = this;
     let { gl, buffers, attributes } = this;
 
     if (font === null) {
@@ -396,21 +396,21 @@ export class Terminal {
         let i = x + y * this.width;
 
         if (
-          backBuffer.chars[i] === frontBuffer.chars[i] &&
-          backBuffer.foreground[i] === frontBuffer.foreground[i] &&
-          backBuffer.background[i] === frontBuffer.background[i]
+          drawingBuffer.chars[i] === screenBuffer.chars[i] &&
+          drawingBuffer.foreground[i] === screenBuffer.foreground[i] &&
+          drawingBuffer.background[i] === screenBuffer.background[i]
         ) {
           continue;
         }
 
-        let char = backBuffer.chars[i];
+        let char = drawingBuffer.chars[i];
 
         if (font.mapping && char in font.mapping) {
           char = font.mapping[char];
         }
 
-        let fg = backBuffer.foreground[i];
-        let bg = backBuffer.background[i];
+        let fg = drawingBuffer.foreground[i];
+        let bg = drawingBuffer.background[i];
         let textureX = char % font.columns;
         let textureY = char / font.columns | 0;
 
@@ -478,11 +478,11 @@ export class Terminal {
       gl.drawArrays(gl.TRIANGLES, 0, vertexCount);
     }
 
-    // Swap the buffers so that the front buffer reflects the current
-    // state of the screen, then reset the back buffer for drawing.
+    // Swap the buffers so that the screen buffer reflects the current
+    // state of the screen, then reset the drawing buffer for drawing.
 
-    this.frontBuffer = backBuffer;
-    this.backBuffer = frontBuffer;
+    this.screenBuffer = drawingBuffer;
+    this.drawingBuffer = screenBuffer;
     this.clearDrawingBuffer();
   }
 
@@ -490,7 +490,7 @@ export class Terminal {
    * Reset the contents of the buffer we're currently drawing to.
    */
   clearDrawingBuffer() {
-    this.backBuffer.clear();
+    this.drawingBuffer.clear();
   }
 
   /**
